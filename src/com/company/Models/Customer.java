@@ -4,12 +4,12 @@ public class Customer {
 
     private int id;
     private String name;
-    private int cityId;
+    private City city;
 
-    public Customer(int id, String name, int cityId) {
+    public Customer(int id, String name, City city) {
         this.id = id;
         this.name = name;
-        this.cityId = cityId;
+        this.city = city;
     }
 
     public Customer() {
@@ -31,11 +31,11 @@ public class Customer {
         this.name = name;
     }
 
-    public int getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 }
