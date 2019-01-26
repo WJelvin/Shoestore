@@ -38,4 +38,10 @@ public class Customer {
     public void setCity(City city) {
         this.city = city;
     }
+
+    @Override
+    public String toString() {
+        return name + '\n' +
+                "Stad: " + city;
+    }
 }

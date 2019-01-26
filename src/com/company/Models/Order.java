@@ -7,12 +7,12 @@ public class Order {
 
     private int id;
     private Date orderDate;
-    private int customerid;
+    private Customer customer;
 
-    public Order(int id, Date orderDate, int customerid) {
+    public Order(int id, Date orderDate, Customer customer) {
         this.id = id;
         this.orderDate = orderDate;
-        this.customerid = customerid;
+        this.customer = customer;
     }
 
     public Order() {
@@ -34,11 +34,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public int getCustomerid() {
-        return customerid;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerid(int customerid) {
-        this.customerid = customerid;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

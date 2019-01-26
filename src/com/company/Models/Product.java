@@ -7,16 +7,16 @@ public class Product {
     private String colour;
     private int size;
     private double price;
-    private int brandId;
+    private Brand brand;
     private int stock;
 
-    public Product(int id, String name, String colour, int size, double price, int brandId, int stock) {
+    public Product(int id, String name, String colour, int size, double price, Brand brand, int stock) {
         this.id = id;
         this.name = name;
         this.colour = colour;
         this.size = size;
         this.price = price;
-        this.brandId = brandId;
+        this.brand = brand;
         this.stock = stock;
     }
 
@@ -63,12 +63,12 @@ public class Product {
         this.price = price;
     }
 
-    public int getBrandId() {
-        return brandId;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrandId(int brandId) {
-        this.brandId = brandId;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public int getStock() {
