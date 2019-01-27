@@ -1,8 +1,10 @@
 package com.company;
 
 
+import com.company.Models.Brand;
 import com.company.Models.City;
 import com.company.Models.Customer;
+import com.company.Models.Product;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -93,6 +95,34 @@ public class DbRepo {
         }
         return city;
     }
+
+    public List<Product> getAllProductsInStock(){
+        List<Product> products = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(
+                p.getProperty("connectionString"),
+                p.getProperty("name"),
+                p.getProperty("password"));
+             Statement statement = con.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from products inner join brands on products.brandId = brands.id")){
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("products.id");
+                String name = resultSet.getString("name");
+                String colour = resultSet.getString("colour");
+                int size = resultSet.getInt("size");
+                double price = resultSet.getDouble("price");
+                Brand brand = new Brand(resultSet.getInt("brands.id"), resultSet.getString("brands.name"));
+                int stock = resultSet.getInt("stock");
+                products.add(new Product(id, name, colour, size, price, brand, stock));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
 
 
 }

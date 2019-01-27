@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.Models.Customer;
+import com.company.Models.Product;
 import com.company.View.UserInterface;
 
 import java.util.List;
@@ -13,9 +14,11 @@ public class Main {
         DbRepo db = new DbRepo();
         UserInterface ui = new UserInterface();
 
-        List<Customer> al = db.getAllCustomers();
+        List<Customer> customers = db.getAllCustomers();
+        List<Product> products = db.getAllProductsInStock();
 
-        int chosenCustomer = ui.choseCustomer(al);
+//        int chosenCustomer = ui.choseCustomer(customers);
+        int chosenProduct = ui.choseProduct(products);
 
 
 
