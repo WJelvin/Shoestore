@@ -41,7 +41,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return name + '\n' +
-                "Stad: " + city;
+        return "-> " + name + ", " + city + '\n';
     }
 }

@@ -1,6 +1,8 @@
 package com.company;
 
+import com.company.Controllers.Controller;
 import com.company.Models.Customer;
+import com.company.Models.Order;
 import com.company.Models.Product;
 import com.company.View.UserInterface;
 
@@ -11,16 +13,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        DbRepo db = new DbRepo();
-        UserInterface ui = new UserInterface();
+        Controller controller = new Controller();
 
-        List<Customer> customers = db.getAllCustomers();
-        List<Product> products = db.getAllProductsInStock();
-
-//        int chosenCustomer = ui.choseCustomer(customers);
-        int chosenProduct = ui.choseProduct(products);
-
-
+        controller.startShopping();
 
     }
 }

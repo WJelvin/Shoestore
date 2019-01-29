@@ -41,4 +41,9 @@ public class Order {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    @Override
+    public String toString() {
+        return "-> " + "Order: " + orderDate + "\n";
+    }
 }

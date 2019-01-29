@@ -1,10 +1,7 @@
 package com.company;
 
 
-import com.company.Models.Brand;
-import com.company.Models.City;
-import com.company.Models.Customer;
-import com.company.Models.Product;
+import com.company.Models.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -104,7 +101,7 @@ public class DbRepo {
                 p.getProperty("name"),
                 p.getProperty("password"));
              Statement statement = con.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from products inner join brands on products.brandId = brands.id")){
+             ResultSet resultSet = statement.executeQuery("select * from products inner join brands on products.brandId = brands.id having stock > 0")){
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("products.id");
@@ -123,6 +120,65 @@ public class DbRepo {
         return products;
     }
 
+    public List<Order> getOrdersByCustomerId(int customerId){
+        List<Order> orders = new ArrayList<>();
+
+        try (Connection con = DriverManager.getConnection(
+                p.getProperty("connectionString"),
+                p.getProperty("name"),
+                p.getProperty("password"));
+             Statement statement = con.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from orders inner join customers " +
+                     "on orders.customerId = Customers.id having customers.id = " + customerId + " and shipped is false")){
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("orders.id");
+                Date orderDate = resultSet.getDate("orderDate");
+                Customer customer = getCustomerById(customerId);
+                orders.add(new Order(id, orderDate, customer));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public void addToCart(int customerId, int orderId, int productId) {
+        try (Connection con = DriverManager.getConnection(
+                p.getProperty("connectionString"),
+                p.getProperty("name"),
+                p.getProperty("password"));
+             CallableStatement statement = con.prepareCall("Call addToCart(?, ?, ?)")) {
+
+            statement.setInt(1,customerId);
+            statement.setInt(2,orderId);
+            statement.setInt(3,productId);
+            statement.execute();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addToCart(int customerId, int productId) {
+        try (Connection con = DriverManager.getConnection(
+                p.getProperty("connectionString"),
+                p.getProperty("name"),
+                p.getProperty("password"));
+             CallableStatement statement = con.prepareCall("Call addToCart(?, ?, ?)")) {
+
+            statement.setInt(1,customerId);
+            statement.setNull(2,Types.INTEGER);
+            statement.setInt(3,productId);
+            statement.execute();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
