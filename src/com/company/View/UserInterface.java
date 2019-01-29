@@ -54,8 +54,11 @@ public class UserInterface {
         System.out.println("Vilken beställning vill du lägga till din produkt i (Ange siffra): ");
         int choice = Integer.parseInt(sc.nextLine());
 
-
         return choice;
+    }
+
+    public void printOrderStatus(String s) {
+        System.out.println(s);
     }
 
 }

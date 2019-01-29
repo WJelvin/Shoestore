@@ -26,9 +26,9 @@ public class Controller {
 
         int chosenOrder = ui.choseOrder(orders);
         if (chosenOrder == orders.size()) {
-            db.addToCart(customers.get(chosenCustomer).getId(), products.get(chosenProduct).getId());
+            ui.printOrderStatus(db.addToCart(customers.get(chosenCustomer).getId(), products.get(chosenProduct).getId()));
         } else {
-            db.addToCart(customers.get(chosenCustomer).getId(), orders.get(chosenOrder).getId(), products.get(chosenProduct).getId());
+            ui.printOrderStatus(db.addToCart(customers.get(chosenCustomer).getId(), orders.get(chosenOrder).getId(), products.get(chosenProduct).getId()));
         }
 
 

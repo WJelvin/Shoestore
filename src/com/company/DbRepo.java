@@ -4,7 +4,6 @@ package com.company;
 import com.company.Models.*;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -144,39 +143,62 @@ public class DbRepo {
         return orders;
     }
 
-    public void addToCart(int customerId, int orderId, int productId) {
-        try (Connection con = DriverManager.getConnection(
+    public String addToCart(int customerId, int orderId, int productId) {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(
                 p.getProperty("connectionString"),
                 p.getProperty("name"),
                 p.getProperty("password"));
-             CallableStatement statement = con.prepareCall("Call addToCart(?, ?, ?)")) {
+            CallableStatement statement = con.prepareCall("Call addToCart(?, ?, ?)");
+
+            con.setAutoCommit(false);
 
             statement.setInt(1,customerId);
             statement.setInt(2,orderId);
             statement.setInt(3,productId);
             statement.execute();
 
+            con.commit();
+            return "Din vara har lagts till i ordern!";
+
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            return "Något gick tyvärr fel. Din vara har inte lagts till i ordern. Vid kontakt med kundtjänst uppge följande felkod: " + e.getErrorCode();
         }
     }
 
-    public void addToCart(int customerId, int productId) {
-        try (Connection con = DriverManager.getConnection(
-                p.getProperty("connectionString"),
-                p.getProperty("name"),
-                p.getProperty("password"));
-             CallableStatement statement = con.prepareCall("Call addToCart(?, ?, ?)")) {
+    public String addToCart(int customerId, int productId) {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(
+                    p.getProperty("connectionString"),
+                    p.getProperty("name"),
+                    p.getProperty("password"));
+            CallableStatement statement = con.prepareCall("Call addToCart(?, ?, ?)");
+
+            con.setAutoCommit(false);
 
             statement.setInt(1,customerId);
             statement.setNull(2,Types.INTEGER);
             statement.setInt(3,productId);
             statement.execute();
 
+            con.commit();
+            return "Din vara har lagts till i ordern!";
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                con.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            return "Något gick tyvärr fel. Din vara har inte lagts till i ordern. Vid kontakt med kundtjänst uppge följande felkod: " + e.getErrorCode();
         }
     }
 
