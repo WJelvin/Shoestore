@@ -13,7 +13,7 @@ public class CategoryProducts {
         return (ArrayList<Product>) categoryMap.get(categoryId);
     }
 
-    public void addProductToCategory(int orderId, Product product) {
-        categoryMap.computeIfAbsent(orderId, o -> new ArrayList<>()).add(product);
+    public void addProductToCategory(int categoryId, Product product) {
+        categoryMap.computeIfAbsent(categoryId, o -> new ArrayList<>()).add(product);
     }
 }
